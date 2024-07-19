@@ -28,16 +28,13 @@ public class ObjectMover : MonoBehaviour
         if (!moveX && !moveY)
             return;
 
-        if (!moveX)
-            return;
-
         // Determine the target position based on direction
         Vector3 targetPosition = new Vector3(0,0,0);
 
         if (moveX)
-            targetPosition = movingToB ? new Vector2(pointB, transform.position.y) : new Vector2(pointA, transform.position.y);
+            targetPosition = movingToB ? new Vector3(pointB, transform.position.y, transform.position.z) : new Vector3(pointA, transform.position.y, transform.position.z);
         else if (moveY)
-            targetPosition = movingToB ? new Vector2(transform.position.x, pointB) : new Vector2(transform.position.x, pointA);
+            targetPosition = movingToB ? new Vector3(transform.position.x, pointB, transform.position.z) : new Vector3(transform.position.x, pointA, transform.position.z);
 
 
         // Calculate the step size
@@ -47,7 +44,7 @@ public class ObjectMover : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
 
         // Check if the object has reached the target position
-        if (Vector2.Distance(transform.position, targetPosition) <= 0.01f)
+        if (Vector3.Distance(transform.position, targetPosition) <= 0.01f)
         {
             // Toggle direction
             movingToB = !movingToB;
